@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login & Signup</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+.container {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  width: 320px;
+  text-align: center;
+}
+h2 {
+  color: #333;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+button {
+  width: 100%;
+  padding: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+button:hover {
+  background: #0056b3;
+}
+a {
+  display: block;
+  margin-top: 10px;
+  color: #007bff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+#signup-box { display: none; }
+</style>
+</head>
+<body>
+
+<div class="container" id="login-box">
+  <h2>Login</h2>
+  <input type="email" id="login-email" placeholder="Email" required>
+  <input type="password" id="login-password" placeholder="Password" required>
+  <button onclick="login()">Login</button>
+  <a href="#" onclick="showSignup()">Create an account</a>
+</div>
+
+<div class="container" id="signup-box">
+  <h2>Sign Up</h2>
+  <input type="text" id="signup-name" placeholder="Name" required>
+  <input type="email" id="signup-email" placeholder="Email" required>
+  <input type="password" id="signup-password" placeholder="Password" required>
+  <button onclick="signup()">Create Account</button>
+  <a href="#" onclick="showLogin()">Back to Login</a>
+</div>
+
+<script>
+function showSignup() {
+  document.getElementById('login-box').style.display = 'none';
+  document.getElementById('signup-box').style.display = 'block';
+}
+
+function showLogin() {
+  document.getElementById('signup-box').style.display = 'none';
+  document.getElementById('login-box').style.display = 'block';
+}
+
+function signup() {
+  const name = document.getElementById('signup-name').value;
+  const email = document.getElementById('signup-email').value;
+  const password = document.getElementById('signup-password').value;
+
+  if (!name || !email || !password) {
+    alert("Please fill in all fields!");
+    return;
+  }
+
+  const user = { name, email, password };
+  localStorage.setItem('user', JSON.stringify(user));
+  alert("Account created successfully!");
+  showLogin();
+}
+
+function login() {
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  if (!user) {
+    alert("No account found! Please sign up first.");
+    return;
+  }
+
+  if (user.email === email && user.password === password) {
+    alert("Login successful!");
+  } else {
+    alert("Invalid email or password!");
+  }
+}
+</script>
+
+</body>
+</html>
